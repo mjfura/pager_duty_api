@@ -4,7 +4,6 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "src")))
 from src.routes import app
 from src.config.database import engine, Base
-# from src.models import Service,Incident,Team,EscalationPolicy,ServiceTeam,ServiceEscalationPolicy,TeamEscalationPolicy,IncidentTeam
 
 
 def create_tables():

@@ -48,85 +48,19 @@ def load_data():
     incidents_use_case = IncidentsUseCase(incidents_repository)
     
     teams_use_case.insert_teams(teams.json()['teams'])
-    # for team in teams.json()['teams']:
-    #     db_team = Team(
-    #         team_id=team['id'],
-    #         name=team.get('name'),
-    #         description=team.get('description')
-    #     )
-    #     db_session.merge(db_team)
-    #     db_session.commit()
-    #     id_local = db_team.id
-    #     print(f'ID LOCAL {id_local}')
+ 
     response = client.get('/services',params={
     "limit": 100
     })
     services_ids = [service['id'] for service in response.json()['services']]
     services_use_case.insert_services(response.json()['services'])
-    # for service in response.json()['services']:
-    #     db_service = Service(
-    #         service_id=service['id'],
-    #         name=service.get('name'),
-    #         description=service.get('description'),
-    #         status=service.get('status'),
-    #         created_at=isoparse(service['created_at']),
-    #         updated_at=isoparse(service['updated_at'])
-    #     )
-    #     db_session.merge(db_service)
-    #     db_session.commit()
-    #     id_local = db_service.id
-    #     print(f'ID LOCAL {id_local}')
-    #     teams_service = service.get('teams', [])
-    #     for team in teams_service:
-    #         team_data = db_session.query(Team).filter_by(team_id=team['id']).first()
-    #         if not team_data:
-    #             continue
-    #         db_service_team = ServiceTeam(
-    #             service_id=id_local,
-    #             team_id=team_data.id
-    #         )
-    #         db_session.merge(db_service_team)
-    #         db_session.commit()
-    #     print(f"✅ Servicio {service['name']} guardado correctamente con Teams.")
-        
-    # print("✅ Servicios guardados correctamente.")
-
+    
     
     escalation_policies=client.get('/escalation_policies',params={
     "limit": 100
     }
     )
     escalation_policies_use_case.insert_escalation_policies(escalation_policies.json()['escalation_policies'])
-    # for policy in escalation_policies.json()['escalation_policies']:
-    #     db_escalation_policy = EscalationPolicy(
-    #         policy_id=policy['id'],
-    #         name=policy.get('name'),
-    #         description=policy.get('description')
-    #     )
-    #     db_session.merge(db_escalation_policy)
-    #     db_session.commit()
-    #     id_local = db_escalation_policy.id
-    #     for team in policy.get('teams', []):
-    #         team_data = db_session.query(Team).filter_by(team_id=team['id']).first()
-    #         if not team_data:
-    #             continue
-    #         db_team_escalation_policy = TeamEscalationPolicy(
-    #             escalation_policy_id=id_local,
-    #             team_id=team_data.id
-    #         )
-    #         db_session.merge(db_team_escalation_policy)
-    #         db_session.commit()
-    #     for service in policy.get('services', []):
-    #         service_data = db_session.query(Service).filter_by(service_id=service['id']).first()
-    #         if not service_data:
-    #             continue
-    #         db_service_escalation_policy = ServiceEscalationPolicy(
-    #             escalation_policy_id=id_local,
-    #             service_id=service_data.id
-    #         )
-    #         db_session.merge(db_service_escalation_policy)
-    #         db_session.commit()
-    #     print(f'ID LOCAL {id_local}')
     
     
     offset = 0
@@ -146,33 +80,7 @@ def load_data():
         data = response_incidents.json()
         incidents = data.get('incidents', [])
         incidents_use_case.insert_incidents(incidents)
-        # for incident in incidents:
-        #     db_incident = Incident(
-        #         incident_id=incident['id'],
-        #         service_id=db_session.query(Service).filter_by(service_id=incident['service']['id']).first().id,
-        #         escalation_policy_id = db_session.query(EscalationPolicy).filter_by(policy_id=incident['escalation_policy']['id']).first().id,
-        #         status=incident.get('status'),
-        #         urgency=incident.get('urgency'),
-        #         summary=incident.get('summary'),
-        #         created_at=isoparse(incident['created_at']),
-        #         updated_at=isoparse(incident['updated_at'])
-        #     )
-        #     db_session.merge(db_incident)
-        #     db_session.commit()
-        #     id_local = db_incident.id
-        #     teams_incident = incident.get('teams', [])
-        #     for team in teams_incident:
-        #         team_data = db_session.query(Team).filter_by(team_id=team['id']).first()
-        #         if not team_data:
-        #             continue
-        #         db_incident_team = IncidentTeam(
-        #             incident_id=id_local,
-        #             team_id=team_data.id
-        #         )
-        #         db_session.merge(db_incident_team)
-        #         db_session.commit()
-        #     print(f'ID LOCAL {id_local}')
-            
+       
         all_incidents.extend(incidents)
 
         if not data.get('more', False):

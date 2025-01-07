@@ -1,5 +1,10 @@
 # Backend API Pager Duty
 
+## Description
+We are going to create an API that will allow us to extract information from the Pager Duty API and store it in a database. Then we will create endpoints to extract information from the database and export it to a CSV file.
+Besides that we are using a layer architecture to separate the concerns of the project in Domain, Infrastructure ad Application.
+
+
 ## Setup
 
 1. Clone the repository
