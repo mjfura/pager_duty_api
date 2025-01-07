@@ -1,0 +1,58 @@
+# Archivos y carpetas comunes a ignorar
+
+# Archivos de entorno
+.env
+.env.local
+.env.production
+.env.development
+
+# Archivos de configuración de editor/IDE
+.vscode/
+.idea/
+*.iml
+
+# Archivos generados por el sistema
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Archivos de dependencias locales
+*.log
+*.pid
+*.seed
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# Carpeta de dependencias locales de Python
+venv/
+.virtualenv/
+*.egg-info/
+dist/
+build/
+
+# Node.js (si hay scripts JS en el proyecto)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Docker-compose y archivos Docker no necesarios dentro del contenedor
+docker-compose.override.yml
+Dockerfile*
+
+# Carpeta de almacenamiento temporal
+tmp/
+temp/
+
+# Datos sensibles
+secrets/
+keys/
+certificates/
+
+# Caché
+.cache/
+pip-wheel-metadata/
+__pycache__/

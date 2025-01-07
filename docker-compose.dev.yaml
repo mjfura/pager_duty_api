@@ -1,0 +1,59 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  api_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: api_dev_container
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=development
+      - FLASK_RUN_PORT=8000
+      - DB_HOST=db_dev
+      - DB_USER=${DB_DEV_USER}
+      - DB_PASSWORD=${DB_DEV_PASSWORD}
+      - DB_NAME=${DB_DEV}
+    depends_on:
+      db_dev:
+        condition: service_healthy
+
+    volumes:
+      - .:/app
+    networks:
+      - pager_duty_network
+
+  db_dev:
+    image: mysql:8
+    container_name: db_dev_container
+    env_file:
+      - .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD_DEV}
+      - MYSQL_DATABASE=${DB_DEV}
+      - MYSQL_USER=${DB_DEV_USER}
+      - MYSQL_PASSWORD=${DB_DEV_PASSWORD}
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+    networks:
+      - pager_duty_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_dev_data:
+
+networks:
+  pager_duty_network:
+    driver: bridge
