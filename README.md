@@ -15,6 +15,8 @@
 4. Run `docker compose -f docker-compose.dev.yaml up`
 5. Go to `http://localhost:8000/load_data` to load the data from the Pager Duty API to the database.
 
+**Developing Hours: 5h**
+
 ## API Endpoints
 
 1. `/load_data` - Load data from the Pager Duty API to the database.
